@@ -1,8 +1,8 @@
-Projet : Générateur de documents officiel 
+**Projet : Générateur de documents **
 
-Le générateur permettra de générer des faux documents officiels pour divers documents (lettre de résiliation, CV, etc.) ,
+Le générateur permettra de générer des faux documents par exemple des lettre de résiliation, des CV,ou bien des attestations de déplacement en fonction des informations de l'utilisateur
 
-Objectif  :
+Objectifs  :
 - Réaliser avec Glade et GTK-rs une interface graphique qui permettra à l’utilisateur d’entrer ces informations en fonction du document qu’il choisira
 - Avec les informations, générer le document dans un fichier .txt
 - Pouvoir générer des documents pdf
