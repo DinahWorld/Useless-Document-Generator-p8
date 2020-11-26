@@ -15,5 +15,6 @@ Bonus :
 
 - [ ] Après avoir générer un CV, le programme va conseillé grâce aux informations de l'utilisateur un métier
 - [ ] Permettre à l'utilisateur de sauvegarder ces informations
-    
+- [ ] Refaire le O RLY Cover Generator mais à ma façon
+
 
