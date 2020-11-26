@@ -1,1 +1,11 @@
->∫#z—ß≠´^∫∑^vá.ôÈÌ∞∑†û∂≠zÍÈzπû∂⁄⁄uË'≠Í›z«⁄ªhrÈûû€)j∑±zjey◊¨ïÎm≠Á^Æ»•â´b¢w^∞%hπ∏ûù◊¨j€^≤÷≠äâÏuÁiïßôÈÌzwËùÀb¢w^≤)ﬂ¢πö∂*'±◊•∫ÿ•ä∆≠zÍŒn7ú∂'ÏE©b±ÍÓùËßµÍﬂi«†≠™aä´û™Ë©zπû∂⁄⁄ñÎbñ+µÎ´uÈÌ≠Í‹z»ß~äÊjÿ®û«≠uË'≠Í›j{.ûöﬁö'´µÈ©≤Èﬁj€^≤÷≠äâ›y⁄ei«¶z{@ΩÁ%z»ß~äÊjÿ®û»'≠ÍÂy⁄∫gßµ÷ß≤Èﬂâ»bzªq¥Ë∫◊´˘◊ù°À¶z{lz◊+y◊ß¢ÎﬁñW¨}Èﬁ∂∑¨>ãØ¢*‡û∑´uÎ°À¶z{l•◊¿éã≠z∑Z∫⁄ﬁ±˙'rÿ®ûv•ä€>râ©ïÏ^
+                                                        Document Generator
+
+Objectifs : R√©aliser une interface graphique √† l'aide de Glade et de GTK-rs qui permettra √† l'utilisateur de g√©n√©rer un document (attestation de d√©placement, CV, lettre de r√©siliation,etc...) gr√¢ce aux informations qu'il aura entr√© dans l'interface
+
+T√¢ches :
+- [ ] R√©aliser une interface graphique qui permettra d'entrer des informations et de les r√©cuperer dans des variables
+- [ ] Utiliser les informations de l'utilisateur afin de g√©n√©rer un fichier texte 
+- [ ] R√©aliser plusieurs interfaces pour diff√©rents documents
+- [ ] G√©n√©rer un fichier PDF
+- [ ] Ajouter d'autres fonctionnalit√©
+
