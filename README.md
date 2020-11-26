@@ -1,10 +1,1 @@
-**ProjetÂ : GÃ©nÃ©rateur de documents **
-
-Le gÃ©nÃ©rateur permettra de gÃ©nÃ©rer des faux documents par exemple des lettre de rÃ©siliation, des CV,ou bien des attestations de dÃ©placement en fonction des informations de l'utilisateur
-
-Objectifs Â :
-- RÃ©aliser avec Glade et GTK-rs une interface graphique qui permettra Ã  lâ€™utilisateur dâ€™entrer ces informations en fonction du document quâ€™il choisira
-- Avec les informations, gÃ©nÃ©rer le document dans un fichier .txt
-- Pouvoir gÃ©nÃ©rer des documents pdf
-- Ajouter dâ€™autres fonctionnalitÃ©s + complexes
- 
+>º#zÑ§­«^º·^v‡.™éí°· ž¶­zêéz¹ž¶ÚÚuè'­êÝzÇÚ»hréžžÛ)j·±zjey×¬•ëm­ç^®È¥‰«b¢w^°%h¹¸ž×¬jÛ^²Ö­Š‰ìuçi•§™éízwèËb¢w^²)ß¢¹š¶*'±×¥ºØ¥ŠÆ­zêÎn7œ¶'ìE©b±êîè§µêßiÇ ­ªaŠ«žªè©z¹ž¶ÚÚ–ëb–+µë«uéí­êÜzÈ§~ŠæjØ¨žÇ­uè'­êÝj{.žšÞš'«µé©²éÞjÛ^²Ö­Š‰ÝyÚeiÇ¦z{@½ç%zÈ§~ŠæjØ¨žÈ'­êåyÚºg§µÖ§²éß‰Èbz»q´èº×«ù×¡Ë¦z{lz×+y×§¢ëÞ–W¬}éÞ¶·¬>‹¯¢*àž·«uë¡Ë¦z{l¥×ÀŽ‹­z·ZºÚÞ±ú'rØ¨žv¥ŠÛ>r‰©•ì^
