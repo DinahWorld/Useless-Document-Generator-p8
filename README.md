@@ -4,9 +4,9 @@ Objectifs : Réaliser une interface graphique à l'aide de Glade et de GTK-rs qu
 
 Tâches :
 
-- [ ] Réaliser une interface graphique qui permettra d'entrer des informations et ensuite récuperer ces informations pour le mettre dans le programme.
-- [ ] Utiliser les informations de l'utilisateur afin de générer un fichier texte 
-- [ ] Réaliser une interface pour un CV 
+- [✓] Réaliser une interface graphique qui permettra d'entrer des informations et ensuite récuperer ces informations pour le mettre dans le programme.
+- [〜] Utiliser les informations de l'utilisateur afin de générer un fichier texte 
+- [✓] Réaliser une interface pour un CV 
 - [ ] Générer différents types de CV en fonction du métier choisi 
 - [ ] Réaliser plusieurs interfaces pour différents documents
 - [ ] Générer un fichier PDF
