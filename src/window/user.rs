@@ -2,11 +2,25 @@ use crate::window;
 extern crate gtk;
 use gtk::prelude::*;
 
+macro_rules! clone {
+    (@param _) => ( _ );
+    (@param $x:ident) => ( $x );
+    ($($n:ident),+ => move || $body:expr) => (
+        {
+            $( let $n = $n.clone(); )+
+            move || $body
+        }
+    );
+    ($($n:ident),+ => move |$($p:tt),+| $body:expr) => (
+        {
+            $( let $n = $n.clone(); )+
+            move |$(clone!(@param $p),)+| $body
+        }
+    );
+}
+
 pub fn user() {
-    if gtk::init().is_err() {
-        println!("Failed to initialize GTK.");
-        return;
-    }
+   
     
     let glade_src = include_str!("../glade/test.glade");
     let builder = gtk::Builder::from_string(glade_src);
@@ -25,8 +39,7 @@ pub fn user() {
         Inhibit(false)
     });
 
-    let window_clone = window.clone();
-    validate_button.connect_clicked(move |_| {
+    validate_button.connect_clicked(clone!(window => move |_| {
         let mut gender = window::Gender::Homme;
         if femme.get_active() {
             gender = window::Gender::Femme;
@@ -35,14 +48,16 @@ pub fn user() {
             gender = window::Gender::Homme;
         }
 
-        let new_user =
-        window::User::create_user(gender, lastname.clone(), firstname.clone(), age.clone());
+        let new_user = window::User::create_user(gender, lastname.clone(), firstname.clone(), age.clone());
         window::User::show_id(new_user);
         window.hide();
         window::menu::menu();
-    });
+        window.show();
+    }));
 
-    window_clone.show_all();
+    window.show_all();
 
     gtk::main();
+
+    
 }
