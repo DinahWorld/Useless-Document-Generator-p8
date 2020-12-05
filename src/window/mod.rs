@@ -4,6 +4,7 @@ use std::fmt;
 pub mod menu;
 pub mod user;
 pub mod cv;
+use std::sync::{Arc, Mutex};
 
 
 pub struct User {
@@ -35,6 +36,8 @@ impl User {
         println!("{}", user);
     }
 }
+
+#[derive(Clone)]
 pub struct Adress {
     date_work: String,
     company: String,
@@ -61,8 +64,8 @@ impl Adress {
         }
     }
 
-    pub fn show_adress(adress: Adress){
-        println!("{}",adress)
+    pub fn add(adress: Adress, vec : &mut Vec<Adress>){
+        vec.push(adress);
     }
 }
 
@@ -91,7 +94,7 @@ impl fmt::Display for Adress {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
             f,
-            "Adresse {} {} {} {}",
+            " {} {} {} {}",
             self.date_work, self.company, self.job, self.description_work
         )
     }
