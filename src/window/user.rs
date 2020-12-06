@@ -20,8 +20,6 @@ macro_rules! clone {
 }
 
 pub fn user() {
-   
-    
     let glade_src = include_str!("../glade/test.glade");
     let builder = gtk::Builder::from_string(glade_src);
 
@@ -58,6 +56,4 @@ pub fn user() {
     window.show_all();
 
     gtk::main();
-
-    
 }

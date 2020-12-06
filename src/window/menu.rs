@@ -26,7 +26,7 @@ pub fn menu() {
     let builder = gtk::Builder::from_string(glade_src);
     let window: gtk::Window = builder.get_object("Menu").unwrap();
     let cv: gtk::Button = builder.get_object("CV").unwrap();
-    
+
     window.connect_delete_event(|_, _| {
         gtk::main_quit();
         Inhibit(false)
@@ -41,6 +41,4 @@ pub fn menu() {
     window.show_all();
 
     gtk::main();
-
-    
 }

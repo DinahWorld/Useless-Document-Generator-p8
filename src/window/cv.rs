@@ -31,7 +31,7 @@ pub fn cv() {
     let stack_school: Rc<RefCell<Vec<window::School>>> = Rc::new(RefCell::new(Vec::new()));
     let stack_skill: Rc<RefCell<Vec<window::Skill>>> = Rc::new(RefCell::new(Vec::new()));
 
-    let adress: gtk::Entry = builder.get_object("adress").unwrap();
+    let localization: gtk::Entry = builder.get_object("adress").unwrap();
     let compl_adress: gtk::Entry = builder.get_object("compl_adress").unwrap();
     let zipcode: gtk::Entry = builder.get_object("zipCode").unwrap();
     let city: gtk::Entry = builder.get_object("city").unwrap();
@@ -61,21 +61,38 @@ pub fn cv() {
     });
 
     add_work.connect_clicked(clone!(stack_work => move |_| {
-        let wrk = window::Work::create_work(date_work.clone(),company.clone(),job.clone(),description_work.clone());
-        stack_work.borrow_mut().push(wrk);
+        /*let wrk = window::Work::create_work(
+            date_work.clone(),
+            company.clone(),
+            job.clone(),
+            description_work.clone());
+        stack_work.borrow_mut().push(wrk);*/
     }));
+    
     add_school.connect_clicked(clone!(stack_school => move |_| {
-        let sch = window::School::create_school(date_school.clone(),university.clone(),field.clone(),description_school.clone());
-        stack_school.borrow_mut().push(sch);
+        /*let sch = window::School::create_school(date_school.clone(),
+        university.clone(),
+        field.clone(),
+        description_school.clone());
+        stack_school.borrow_mut().push(sch);*/
     }));
+
     add_skill.connect_clicked(clone!(stack_skill => move |_| {
-        let skl = window::Skill::create_skill(skill.clone(),level.clone());
-        stack_skill.borrow_mut().push(skl);
+        /*let skl = window::Skill::create_skill(skill.clone(),level.clone());
+        stack_skill.borrow_mut().push(skl);*/
     }));
 
     validate.connect_clicked(clone!(stack_work,stack_school,stack_skill => move |_| {
 
-        println!("===== CV ===== ");
+
+        window::generate_cv::cv(
+            localization.get_text().to_string(),
+            compl_adress.get_text().to_string(),
+            zipcode.get_text().to_string(),
+            city.get_text().to_string(),
+            tel.get_text().to_string());
+
+       /* println!("===== CV ===== ");
         println!("Adresse :");
         let info = window::Adress::create_adress(adress.clone(),compl_adress.clone(),zipcode.clone(),city.clone(),tel.clone());
         println!("{}",info);
@@ -90,7 +107,7 @@ pub fn cv() {
         println!("Compétences :");
         for v in stack_skill.borrow_mut().iter(){
             println!("{}",v);
-        }
+        }*/
     }));
 
     window.show_all();

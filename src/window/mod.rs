@@ -2,6 +2,7 @@ extern crate gtk;
 use gtk::prelude::*;
 use std::fmt;
 pub mod cv;
+pub mod generate_cv;
 pub mod menu;
 pub mod user;
 
@@ -34,11 +35,11 @@ impl User {
             age: age,
         }
     }
-
     pub fn show_id(user: User) {
         println!("{}", user);
     }
 }
+
 
 #[derive(Clone)]
 pub struct Adress {
@@ -48,7 +49,7 @@ pub struct Adress {
     city: String,
     tel: String,
 }
-impl Adress {
+/*impl Adress {
     pub fn create_adress(
         adress: gtk::Entry,
         compl_adress: gtk::Entry,
@@ -70,7 +71,7 @@ impl Adress {
             tel: tel,
         }
     }
-}
+}*/
 
 #[derive(Clone)]
 pub struct Work {
@@ -79,7 +80,7 @@ pub struct Work {
     job: String,
     description_work: String,
 }
-impl Work {
+/*impl Work {
     pub fn create_work(
         date_work: gtk::Entry,
         company: gtk::Entry,
@@ -98,7 +99,7 @@ impl Work {
         }
     }
 }
-
+*/
 #[derive(Clone)]
 pub struct School {
     date_school: String,
@@ -106,7 +107,7 @@ pub struct School {
     field: String,
     description_school: String,
 }
-impl School {
+/*impl School {
     pub fn create_school(
         date_school: gtk::Entry,
         university: gtk::Entry,
@@ -125,13 +126,13 @@ impl School {
         }
     }
 }
-
+*/
 #[derive(Clone)]
 pub struct Skill {
     skill: String,
     level: String,
 }
-impl Skill {
+/*impl Skill {
     pub fn create_skill(skill: gtk::Entry, level: gtk::Entry) -> Skill {
         let skill = skill.get_text().to_string();
         let level = level.get_text().to_string();
@@ -142,7 +143,7 @@ impl Skill {
         }
     }
 }
-
+*/
 impl fmt::Display for Gender {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match &*self {
@@ -160,7 +161,7 @@ impl fmt::Display for User {
         )
     }
 }
-
+/*
 impl fmt::Display for Adress {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(
@@ -209,3 +210,4 @@ impl fmt::Display for Skill {
         )
     }
 }
+*/
