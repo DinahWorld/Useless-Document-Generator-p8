@@ -79,6 +79,7 @@
                   <object class="GtkEntry" id="adress">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="placeholder_text" translatable="yes">14 Rue des Poiters</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -89,6 +90,7 @@
                   <object class="GtkEntry" id="compl_adress">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="placeholder_text" translatable="yes">Bat E Esc 4</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -99,6 +101,7 @@
                   <object class="GtkEntry" id="zipCode">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="placeholder_text" translatable="yes">75018</property>
                     <property name="input_purpose">phone</property>
                   </object>
                   <packing>
@@ -110,6 +113,7 @@
                   <object class="GtkEntry" id="city">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="placeholder_text" translatable="yes">Paris 20                                                                     </property>
                     <property name="input_purpose">email</property>
                   </object>
                   <packing>
@@ -142,6 +146,7 @@
                   <object class="GtkEntry" id="tel">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="placeholder_text" translatable="yes">06.xx.xx.xx.x.x</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -205,6 +210,7 @@
                   <object class="GtkEntry" id="descriptionWork">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="placeholder_text" translatable="yes">Blablabla</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -226,6 +232,7 @@
                   <object class="GtkEntry" id="job">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="placeholder_text" translatable="yes">PDG</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -247,6 +254,7 @@
                   <object class="GtkEntry" id="company">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="placeholder_text" translatable="yes">Google</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -257,6 +265,7 @@
                   <object class="GtkEntry" id="dateWork">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="placeholder_text" translatable="yes">2020-2021</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -341,6 +350,7 @@
                   <object class="GtkEntry" id="dateSchool">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="placeholder_text" translatable="yes">XXXX-XXXX</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -362,6 +372,7 @@
                   <object class="GtkEntry" id="university">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="placeholder_text" translatable="yes">Université Paris 8</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -383,20 +394,11 @@
                   <object class="GtkEntry" id="field">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="placeholder_text" translatable="yes">Bac S, Licence Informatique</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">16</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="descriptionSchool">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">17</property>
                   </packing>
                 </child>
                 <child>
@@ -478,7 +480,7 @@
                   <object class="GtkEntry" id="skill">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="placeholder_text" translatable="yes">Compétence</property>
+                    <property name="placeholder_text" translatable="yes">Langages de programmation par exemple</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -489,7 +491,7 @@
                   <object class="GtkEntry" id="level">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="placeholder_text" translatable="yes">Niveau</property>
+                    <property name="placeholder_text" translatable="yes">++/+/-/--</property>
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
@@ -539,14 +541,46 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="validate">
-                    <property name="label" translatable="yes">Valider</property>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">27</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Loisirs</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">24</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="addHobbie">
+                    <property name="label" translatable="yes">Ajouter</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">25</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="hobbie">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="placeholder_text" translatable="yes">Vos loisirs</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
                     <property name="top_attach">24</property>
                   </packing>
                 </child>
@@ -556,8 +590,51 @@
                     <property name="can_focus">False</property>
                   </object>
                   <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">25</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                  </object>
+                  <packing>
                     <property name="left_attach">1</property>
-                    <property name="top_attach">24</property>
+                    <property name="top_attach">26</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="validate">
+                    <property name="label" translatable="yes">Valider</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">27</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">26</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="descriptionSchool">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="placeholder_text" translatable="yes">Blablabla</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">17</property>
                   </packing>
                 </child>
               </object>

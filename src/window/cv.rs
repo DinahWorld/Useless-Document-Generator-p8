@@ -22,7 +22,7 @@ macro_rules! clone {
     );
 }
 
-pub fn cv() {
+pub fn create_cv(user: &Rc<RefCell<window::User>>) {
     let glade_src = include_str!("../glade/cv.glade");
     let builder = gtk::Builder::from_string(glade_src);
     let window: gtk::Window = builder.get_object("CV").unwrap();
@@ -30,8 +30,9 @@ pub fn cv() {
     let stack_work: Rc<RefCell<Vec<window::Work>>> = Rc::new(RefCell::new(Vec::new()));
     let stack_school: Rc<RefCell<Vec<window::School>>> = Rc::new(RefCell::new(Vec::new()));
     let stack_skill: Rc<RefCell<Vec<window::Skill>>> = Rc::new(RefCell::new(Vec::new()));
+    let stack_hobbie: Rc<RefCell<Vec<window::Hobbie>>> = Rc::new(RefCell::new(Vec::new()));
 
-    let adress: gtk::Entry = builder.get_object("adress").unwrap();
+    let localization: gtk::Entry = builder.get_object("adress").unwrap();
     let compl_adress: gtk::Entry = builder.get_object("compl_adress").unwrap();
     let zipcode: gtk::Entry = builder.get_object("zipCode").unwrap();
     let city: gtk::Entry = builder.get_object("city").unwrap();
@@ -53,6 +54,9 @@ pub fn cv() {
     let level: gtk::Entry = builder.get_object("level").unwrap();
     let add_skill: gtk::Button = builder.get_object("addSkill").unwrap();
 
+    let like: gtk::Entry = builder.get_object("hobbie").unwrap();
+    let add_hobbie: gtk::Button = builder.get_object("addHobbie").unwrap();
+
     let validate: gtk::Button = builder.get_object("validate").unwrap();
 
     window.connect_delete_event(|_, _| {
@@ -61,37 +65,60 @@ pub fn cv() {
     });
 
     add_work.connect_clicked(clone!(stack_work => move |_| {
-        let wrk = window::Work::create_work(date_work.clone(),company.clone(),job.clone(),description_work.clone());
+        let wrk = window::Work {
+            date_work : date_work.get_text().to_string(),
+            company : company.get_text().to_string(),
+            job : job.get_text().to_string(),
+            description_work : description_work.get_text().to_string(),
+        };
         stack_work.borrow_mut().push(wrk);
     }));
+
     add_school.connect_clicked(clone!(stack_school => move |_| {
-        let sch = window::School::create_school(date_school.clone(),university.clone(),field.clone(),description_school.clone());
+        let sch = window::School {
+            date_school : date_school.get_text().to_string(),
+            university : university.get_text().to_string(),
+            field : field.get_text().to_string(),
+            description_school : description_school.get_text().to_string(),
+        };
         stack_school.borrow_mut().push(sch);
     }));
+
     add_skill.connect_clicked(clone!(stack_skill => move |_| {
-        let skl = window::Skill::create_skill(skill.clone(),level.clone());
+        let skl = window::Skill {
+            skill: skill.get_text().to_string(),
+            level: level.get_text().to_string(),
+        };
         stack_skill.borrow_mut().push(skl);
     }));
 
-    validate.connect_clicked(clone!(stack_work,stack_school,stack_skill => move |_| {
-
-        println!("===== CV ===== ");
-        println!("Adresse :");
-        let info = window::Adress::create_adress(adress.clone(),compl_adress.clone(),zipcode.clone(),city.clone(),tel.clone());
-        println!("{}",info);
-        println!("Expérience de Travail :");
-        for v in stack_work.borrow_mut().iter(){
-            println!("{}",v);
-        }
-        println!("Etudes :");
-        for v in stack_school.borrow_mut().iter(){
-            println!("{}",v);
-        }
-        println!("Compétences :");
-        for v in stack_skill.borrow_mut().iter(){
-            println!("{}",v);
-        }
+    add_hobbie.connect_clicked(clone!(stack_hobbie => move |_| {
+        let hb = window::Hobbie {
+            like: like.get_text().to_string(),
+        };
+        stack_hobbie.borrow_mut().push(hb);
     }));
+
+    validate.connect_clicked(
+        clone!(user,stack_work,stack_school,stack_skill,stack_hobbie => move |_| {
+
+            let info = window::Adress {
+                localization : localization.get_text().to_string(),
+                compl_adress : compl_adress.get_text().to_string(),
+                zipcode : zipcode.get_text().to_string(),
+                city : city.get_text().to_string(),
+                tel : tel.get_text().to_string(),
+
+            };
+            window::generate_cv::cv(
+                &user,
+                info,
+                &stack_work,
+                &stack_school,
+                &stack_skill,
+                &stack_hobbie);
+        }),
+    );
 
     window.show_all();
 
