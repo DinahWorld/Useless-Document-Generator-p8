@@ -30,7 +30,7 @@ pub fn user() {
 
     let lastname: gtk::Entry = builder.get_object("nom_de_famille").unwrap();
     let firstname: gtk::Entry = builder.get_object("prenom").unwrap();
-    let age: gtk::Entry = builder.get_object("age").unwrap();
+    let birthday: gtk::Entry = builder.get_object("age").unwrap();
 
     window.connect_delete_event(|_, _| {
         gtk::main_quit();
@@ -46,10 +46,14 @@ pub fn user() {
             gender = window::Gender::Homme;
         }
 
-        let new_user = window::User::create_user(gender, lastname.clone(), firstname.clone(), age.clone());
-        window::User::show_id(new_user);
+        let new_user = window::User{
+            gender : gender,
+            lastname : lastname.get_text().to_string(),
+            firstname : firstname.get_text().to_string(),
+            birthday : birthday.get_text().to_string(),
+        };
         window.hide();
-        window::menu::menu();
+        window::menu::menu(new_user);
         window.show();
     }));
 
