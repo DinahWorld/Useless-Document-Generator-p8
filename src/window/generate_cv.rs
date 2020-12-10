@@ -9,7 +9,7 @@ pub fn cv(
     stack_school: &Rc<RefCell<Vec<(String, String, String, String)>>>,
     stack_skill: &Rc<RefCell<Vec<(String, String)>>>,
     stack_hobbie: &Rc<RefCell<Vec<String>>>,
-) {
+){
     let (doc, page1, layer1) =
         PdfDocument::new("PDF_Document_title", Mm(210.0), Mm(297.0), "Layer 1");
     let current_layer = doc.get_page(page1).get_layer(layer1);
@@ -27,7 +27,7 @@ pub fn cv(
     let hb = format!("{}                                 Loisirs", tab);
 
     let font = doc
-        .add_external_font(File::open("assets/fonts/Helvetica-Bold.ttf").unwrap())
+        .add_external_font(File::open("./assets/fonts/Helvetica-Bold.ttf").unwrap())
         .unwrap();
     let font2 = doc
         .add_external_font(File::open("assets/fonts/Helvetica.ttf").unwrap())
@@ -120,6 +120,6 @@ pub fn cv(
 
     current_layer.end_text_section();
 
-    doc.save(&mut BufWriter::new(File::create("../../CV.pdf").unwrap()))
+    doc.save(&mut BufWriter::new(File::create("CV.pdf").unwrap()))
         .unwrap();
 }

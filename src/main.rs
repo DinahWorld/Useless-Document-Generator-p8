@@ -27,6 +27,7 @@ pub fn menu(new_user: window::User) {
     let builder = gtk::Builder::from_string(glade_src);
     let window: gtk::Window = builder.get_object("Menu").unwrap();
     let cv: gtk::Button = builder.get_object("CV").unwrap();
+    let travel: gtk::Button = builder.get_object("Attestation").unwrap();
     let user: Rc<RefCell<window::User>> = Rc::new(RefCell::new(new_user));
 
     window.connect_delete_event(|_, _| {
@@ -38,7 +39,11 @@ pub fn menu(new_user: window::User) {
         window::cv::create_cv(&user);
         window.show();
     }));
-
+    travel.connect_clicked(clone!(user,window => move |_| {
+        window.hide();
+        attestation::deplacement::create_attestation(&user);
+        window.show();
+    }));
     window.show_all();
 
     gtk::main();
@@ -56,6 +61,7 @@ fn user() {
     let lastname: gtk::Entry = builder.get_object("nom_de_famille").unwrap();
     let firstname: gtk::Entry = builder.get_object("prenom").unwrap();
     let birthday: gtk::Entry = builder.get_object("age").unwrap();
+    let born_city: gtk::Entry = builder.get_object("bornCity").unwrap();
 
     window.connect_delete_event(|_, _| {
         gtk::main_quit();
@@ -76,6 +82,7 @@ fn user() {
             lastname : lastname.get_text().to_string(),
             firstname : firstname.get_text().to_string(),
             birthday : birthday.get_text().to_string(),
+            born_city : born_city.get_text().to_string(),
         };
         window.hide();
         menu(new_user);

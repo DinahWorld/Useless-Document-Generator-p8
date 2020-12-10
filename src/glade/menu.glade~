@@ -48,9 +48,8 @@
                     <property name="orientation">vertical</property>
                     <property name="layout_style">start</property>
                     <child>
-                      <object class="GtkButton" id="CV">
-                        <property name="label" translatable="yes">Curriculum vitæ (CV)
-</property>
+                      <object class="GtkButton">
+                        <property name="label" translatable="yes">Lettre de résiliation pour Free</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
@@ -62,8 +61,8 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkButton" id="Attestation">
-                        <property name="label" translatable="yes">Attestation de déplacement</property>
+                      <object class="GtkButton">
+                        <property name="label" translatable="yes">exemple lettre de démission</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
@@ -76,7 +75,7 @@
                     </child>
                     <child>
                       <object class="GtkButton">
-                        <property name="label" translatable="yes">Lettre de fermeture de compte (ça arrive)</property>
+                        <property name="label" translatable="yes">Lettre de motivation</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
@@ -89,7 +88,7 @@
                     </child>
                     <child>
                       <object class="GtkButton">
-                        <property name="label" translatable="yes">Lettre de résiliation pour Free (ça arrive)</property>
+                        <property name="label" translatable="yes"> lettre de fermeture de compte</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
@@ -98,6 +97,33 @@
                         <property name="expand">True</property>
                         <property name="fill">True</property>
                         <property name="position">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="Attestation">
+                        <property name="label" translatable="yes">Attestation de déplacement</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="CV">
+                        <property name="label" translatable="yes">Curriculum vitæ (CV)
+</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">True</property>
+                        <property name="fill">True</property>
+                        <property name="position">5</property>
                       </packing>
                     </child>
                   </object>

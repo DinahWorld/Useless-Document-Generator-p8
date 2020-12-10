@@ -14,6 +14,7 @@ pub struct User {
     pub lastname: String,
     pub firstname: String,
     pub birthday: String,
+    pub born_city: String,
 }
 #[derive(Clone)]
 pub struct Adress {
@@ -51,7 +52,7 @@ pub struct Hobbie {
 
 impl Adress {
     ///Met dans un tupple les informations de l'utilisateur en String
-    fn to_string(&self) -> (String, String, String, String, String) {
+    pub fn to_string(&self) -> (String, String, String, String, String) {
         let localization = self.localization.get_text().to_string();
         let compl_adress = self.compl_adress.get_text().to_string();
         let zipcode = self.zipcode.get_text().to_string();
@@ -61,7 +62,7 @@ impl Adress {
         return (localization, compl_adress, zipcode, city, tel);
     }
     
-    fn build(builder : gtk::Builder) -> Adress {
+    pub fn build(builder : gtk::Builder) -> Adress {
         return Adress {
             localization: builder.get_object("adress").unwrap(),
             compl_adress: builder.get_object("compl_adress").unwrap(),
