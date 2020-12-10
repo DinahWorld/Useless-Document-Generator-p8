@@ -1,6 +1,10 @@
 extern crate gtk;
-pub mod window;
 pub mod attestation;
+pub mod cv;
+use attestation::deplacement as Attestation;
+use cv::cv as Cv;
+use cv::Gender::Femme as F;
+use cv::Gender::Homme as H;
 use gtk::prelude::*;
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -22,13 +26,13 @@ macro_rules! clone {
     );
 }
 
-pub fn menu(new_user: window::User) {
+pub fn menu(new_user: cv::User) {
     let glade_src = include_str!("glade/menu.glade");
     let builder = gtk::Builder::from_string(glade_src);
     let window: gtk::Window = builder.get_object("Menu").unwrap();
     let cv: gtk::Button = builder.get_object("CV").unwrap();
     let travel: gtk::Button = builder.get_object("Attestation").unwrap();
-    let user: Rc<RefCell<window::User>> = Rc::new(RefCell::new(new_user));
+    let user: Rc<RefCell<cv::User>> = Rc::new(RefCell::new(new_user));
 
     window.connect_delete_event(|_, _| {
         gtk::main_quit();
@@ -36,12 +40,12 @@ pub fn menu(new_user: window::User) {
     });
     cv.connect_clicked(clone!(user,window => move |_| {
         window.hide();
-        window::cv::create_cv(&user);
+        Cv::create_cv(&user);
         window.show();
     }));
     travel.connect_clicked(clone!(user,window => move |_| {
         window.hide();
-        attestation::deplacement::create_attestation(&user);
+        Attestation::create_attestation(&user);
         window.show();
     }));
     window.show_all();
@@ -69,15 +73,15 @@ fn user() {
     });
 
     validate_button.connect_clicked(clone!(window => move |_| {
-        let mut gender = window::Gender::Homme;
+        let mut gender = F;
         if femme.get_active() {
-            gender = window::Gender::Femme;
+            gender = F;
         }
         if homme.get_active() {
-            gender = window::Gender::Homme;
+            gender = H;
         }
 
-        let new_user = window::User{
+        let new_user = cv::User{
             gender : gender,
             lastname : lastname.get_text().to_string(),
             firstname : firstname.get_text().to_string(),

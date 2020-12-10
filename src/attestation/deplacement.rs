@@ -1,7 +1,9 @@
-use crate::window;
 use crate::attestation;
+use crate::cv;
 
 extern crate gtk;
+use attestation::generate_attestation as Generate;
+use attestation::Choice;
 use gtk::prelude::*;
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -22,40 +24,30 @@ macro_rules! clone {
         }
     );
 }
-fn true_or_false(choice : &Vec<gtk::CheckButton>) -> usize{
+fn true_or_false(choice: &Vec<gtk::CheckButton>) -> usize {
     for i in 0..9 {
-        if choice[i].get_active(){
-            return i;
+        if choice[i].get_active() {
+            return i + 1;
         }
     }
     return 0;
 }
 
-pub fn create_attestation(user: &Rc<RefCell<window::User>>) {
+pub fn create_attestation(user: &Rc<RefCell<cv::User>>) {
     let glade_src = include_str!("../glade/attestation_deplacement.glade");
     let builder = gtk::Builder::from_string(glade_src);
     let window: gtk::Window = builder.get_object("Attestation").unwrap();
 
-    let hour: gtk::Entry = builder.get_object("hours").unwrap();
-    let adress = window::Adress::build(builder.clone());
-
-    let choice : Vec<gtk::CheckButton> = vec![builder.get_object("1").unwrap(),
-    builder.get_object("2").unwrap(), builder.get_object("3").unwrap(), builder.get_object("4").unwrap(),
-    builder.get_object("5").unwrap(), builder.get_object("6").unwrap(), builder.get_object("7").unwrap(),
-    builder.get_object("8").unwrap(),builder.get_object("9").unwrap()];
-
+    let choice = Choice::build(builder.clone());
     let validate: gtk::Button = builder.get_object("validate").unwrap();
-  
 
-
-    validate.connect_clicked(clone!(user,adress,hour => move |_| {
-        let choice = true_or_false(&choice);
-        attestation::generate_attestation::attestation(
+    validate.connect_clicked(clone!(user,choice => move |_| {
+        Generate::attestation(
             &user,
-            &adress,
-            &hour,
-            choice + 1);
-    }),);
+            &choice.adress,
+            &choice.hour,
+            true_or_false(&choice.choice));
+    }));
 
     window.show_all();
 
@@ -66,3 +58,28 @@ pub fn create_attestation(user: &Rc<RefCell<window::User>>) {
 
     gtk::main();
 }
+
+/*
+#[cfg(test)]
+mod tests {
+
+    use super::*;
+    use crate::party;
+    use party::Instruction as I;
+    use party::Orientation as O;
+    use party::Robot as R;
+    use party::Terrain as T;
+    #[test]
+    fn test_file() {
+        let mut rb = vec![R {
+            id: 1,
+            x: 1,
+            y: 2,
+            orientation: O::North,
+            instruction: vec![&I::F, &I::L],
+        }];
+
+        assert_eq!(file(&mut rb), T { x: 5, y: 5 });
+    }
+}
+*/
