@@ -6,14 +6,13 @@ Tâches Principaux:
 
 - [✓] Réaliser une interface graphique qui permettra d'entrer des informations et ensuite récuperer ces informations pour le mettre dans le programme.
 - [✓] Réaliser une interface pour un CV 
-- [ ] Réaliser plusieurs interfaces pour différents documents
+- [✓] Réaliser plusieurs interfaces pour différents documents
 - [✓] Générer un fichier PDF
 
 Tâches Secondaire:
 
-- [ ] Générateur d'attestation de déplacement
-- [ ] Générateur de lettre de démission
-- [ ] Générateur de lettre de motivation
+- [✓] Générateur d'attestation de déplacement
+- [ ] Générateur de lettre de résiliation FreeBox
 - [ ] Générateur de fermeture de compte bancaire
 
 Bonus :
