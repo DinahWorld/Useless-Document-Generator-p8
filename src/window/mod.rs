@@ -2,8 +2,6 @@ extern crate gtk;
 use gtk::prelude::*;
 pub mod cv;
 pub mod generate_cv;
-pub mod menu;
-pub mod user;
 
 #[derive(Copy, Clone)]
 pub enum Gender {
@@ -12,10 +10,10 @@ pub enum Gender {
 }
 #[derive(Clone)]
 pub struct User {
-    gender: Gender,
-    lastname: String,
-    firstname: String,
-    birthday: String,
+    pub gender: Gender,
+    pub lastname: String,
+    pub firstname: String,
+    pub birthday: String,
 }
 #[derive(Clone)]
 pub struct Adress {
@@ -162,3 +160,4 @@ impl Hobbie {
         self.like.set_text("");
     }
 }
+

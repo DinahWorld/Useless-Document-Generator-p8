@@ -21,7 +21,7 @@ pub fn cv(
 
     let tab = "                                   ";
     let inf = format!("{}                          Informations", tab);
-    let xp = format!("{}                     Expérience de travail", tab);
+    let xp = format!("{}                     Expériences de travail", tab);
     let ed = format!("{}                     Etudes et Diplômes", tab);
     let sk = format!("{}                           Compétences", tab);
     let hb = format!("{}                                 Loisirs", tab);
