@@ -24,9 +24,9 @@ macro_rules! clone {
         }
     );
 }
-fn true_or_false(choice: &Vec<gtk::CheckButton>) -> usize {
-    for i in 0..9 {
-        if choice[i].get_active() {
+pub fn true_or_false(vec: &Vec<gtk::CheckButton>) -> usize {
+    for i in 0..vec.len() {
+        if vec[i].get_active() {
             return i + 1;
         }
     }
@@ -42,10 +42,9 @@ pub fn create_attestation(user: &Rc<RefCell<cv::User>>) {
     let validate: gtk::Button = builder.get_object("validate").unwrap();
 
     validate.connect_clicked(clone!(user,choice => move |_| {
-        Generate::attestation(
+        Generate::generate_attestation(
             &user,
-            &choice.adress,
-            &choice.hour,
+            &choice,
             true_or_false(&choice.choice));
     }));
 
