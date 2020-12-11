@@ -49,6 +49,7 @@ pub fn create_cv(user: &Rc<RefCell<User>>) {
     let school = School::build(builder.clone());
     let skill = Skill::build(builder.clone());
     let hobbie = Hobbie::build(builder.clone());
+    let photo : gtk::FileChooserButton = builder.get_object("photo").unwrap();
 
     let validate: gtk::Button = builder.get_object("validate").unwrap();
 
@@ -78,8 +79,13 @@ pub fn create_cv(user: &Rc<RefCell<User>>) {
 
     validate.connect_clicked(
         clone!(adress,user,stack_work,stack_school,stack_skill,stack_hobbie => move |_| {
-
+            /*match photo {
+                //PathBuf to String
+                Some(path) => println!("{}",path.display().to_string()),
+                None => (), 
+            }*/
             cv::generate_cv::cv(
+                photo.get_filename(),
                 &user,
                 &adress,
                 &stack_work,

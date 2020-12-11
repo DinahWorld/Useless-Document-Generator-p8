@@ -10,7 +10,9 @@ use gtk::prelude::*;
 use resiliation::letter as Letter;
 use std::cell::RefCell;
 use std::rc::Rc;
-
+/*
+        mission : ENLEVER TOUT CES UNWRAP 
+*/
 macro_rules! clone {
     (@param _) => ( _ );
     (@param $x:ident) => ( $x );

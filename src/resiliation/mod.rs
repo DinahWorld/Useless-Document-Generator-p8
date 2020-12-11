@@ -12,7 +12,6 @@ pub struct Letter {
     tel: gtk::Entry,
     adress: Adress,
     email: gtk::Entry,
-    other: gtk::Entry,
 }
 
 impl Letter {
@@ -29,7 +28,6 @@ impl Letter {
             tel: builder.get_object("tel").unwrap(),
             adress: Adress::build(builder.clone()),
             email: builder.get_object("email").unwrap(),
-            other: builder.get_object("other").unwrap(),
         };
     }
 }
