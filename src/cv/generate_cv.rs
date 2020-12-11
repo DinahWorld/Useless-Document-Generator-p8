@@ -5,6 +5,7 @@ use cv::User;
 use {printpdf::*, std::cell::RefCell, std::fs::File, std::io::BufWriter, std::rc::Rc};
 
 pub fn cv(
+    photo : Option<std::path::PathBuf>,
     user: &Rc<RefCell<User>>,
     adress: &Adress,
     stack_work: &Rc<RefCell<Vec<(String, String, String, String)>>>,
@@ -24,7 +25,7 @@ pub fn cv(
     let tab = "                                   ";
     let inf = format!("{}                          Informations", tab);
     let xp = format!("{}                     Expériences de travail", tab);
-    let ed = format!("{}                     Etudes et Diplômes", tab);
+    let ed = format!("{}                       Etudes et Diplômes", tab);
     let sk = format!("{}                           Compétences", tab);
     let hb = format!("{}                                 Loisirs", tab);
 
@@ -39,10 +40,20 @@ pub fn cv(
     current_layer.add_line_break();
     current_layer.use_text(&user.birthday, 12, Mm(10.0), Mm(275.0), &font);
 
+    match photo {
+        Some(path) => {
+            let photo = path.display().to_string();
+            let mut image_file = File::open(photo).unwrap();
+            let image = Image::try_from(image::jpeg::JpegDecoder::new(&mut image_file).unwrap()).unwrap();
+            image.add_to_layer(current_layer.clone(), Some(Mm(170.0)), Some(Mm(250.0)), None, Some(0.5), Some(0.5), None);
+        }
+        None => (), 
+    }
+
     current_layer.begin_text_section();
 
     current_layer.set_font(&font2, 14);
-    current_layer.set_text_cursor(Mm(10.0), Mm(260.0));
+    current_layer.set_text_cursor(Mm(10.0), Mm(255.0));
     current_layer.set_line_height(14);
     current_layer.set_word_spacing(3000);
 

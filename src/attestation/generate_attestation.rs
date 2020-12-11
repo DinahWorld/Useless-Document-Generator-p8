@@ -245,7 +245,7 @@ pub fn generate_attestation(user: &Rc<RefCell<User>>, choix: &Choice, choice: us
     current_layer.end_text_section();
 
     doc.save(&mut BufWriter::new(
-        File::create("attestation.pdf").unwrap(),
+        File::create("Attestation de déplacement.pdf").unwrap(),
     ))
     .unwrap();
 }
