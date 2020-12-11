@@ -45,6 +45,7 @@ pub fn cv(
     current_layer.set_text_cursor(Mm(10.0), Mm(260.0));
     current_layer.set_line_height(14);
     current_layer.set_word_spacing(3000);
+
     current_layer.write_text(inf, &font);
     current_layer.add_line_break();
     current_layer.add_line_break();

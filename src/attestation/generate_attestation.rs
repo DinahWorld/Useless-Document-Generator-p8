@@ -1,19 +1,21 @@
+use crate::attestation;
 use crate::cv;
+
 extern crate gtk;
+use attestation::Choice;
 use chrono::{Datelike, Timelike, Utc};
-use cv::Adress;
 use cv::User;
 use gtk::prelude::*;
 use {printpdf::*, std::cell::RefCell, std::fs::File, std::io::BufWriter, std::rc::Rc};
 
-pub fn attestation(user: &Rc<RefCell<User>>, adress: &Adress, hour: &gtk::Entry, choice: usize) {
+pub fn generate_attestation(user: &Rc<RefCell<User>>, choix: &Choice, choice: usize) {
     let (doc, page1, layer1) =
         PdfDocument::new("PDF_Document_title", Mm(210.0), Mm(297.0), "Layer 1");
     let current_layer = doc.get_page(page1).get_layer(layer1);
     let now = Utc::now();
 
     let user = user.borrow_mut();
-    let adress = adress.to_string();
+    let adress = choix.adress.to_string();
 
     let name = format!("{} {}", &user.firstname, &user.lastname);
     let localization = format!("{} {} {} {}", adress.0, adress.1, adress.2, adress.3);
@@ -225,7 +227,7 @@ pub fn attestation(user: &Rc<RefCell<User>>, adress: &Adress, hour: &gtk::Entry,
     current_layer.set_line_height(20);
     current_layer.set_word_spacing(3000);
     current_layer.write_text("Date et heure de sortie : ", &font3);
-    current_layer.write_text(hour.get_text().to_string(), &font3);
+    current_layer.write_text(choix.hour.get_text().to_string(), &font3);
 
     current_layer.end_text_section();
 

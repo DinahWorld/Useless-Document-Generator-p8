@@ -58,8 +58,8 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton">
-                    <property name="label" translatable="yes">Lettre de fermeture de compte (ça arrive)</property>
+                  <object class="GtkButton" id="Letter">
+                    <property name="label" translatable="yes">Lettre de résiliation (Fournisseur Internet)</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -72,7 +72,7 @@
                 </child>
                 <child>
                   <object class="GtkButton">
-                    <property name="label" translatable="yes">Lettre de résiliation pour Free (ça arrive)</property>
+                    <property name="label" translatable="yes">Lettre de fermeture de compte (ça arrive)</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>

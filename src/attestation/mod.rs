@@ -6,7 +6,7 @@ pub mod generate_attestation;
 use cv::Adress;
 
 #[derive(Clone)]
-struct Choice {
+pub struct Choice {
     adress: Adress,
     hour: gtk::Entry,
     choice: Vec<gtk::CheckButton>,
