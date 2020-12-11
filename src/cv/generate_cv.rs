@@ -29,7 +29,7 @@ pub fn cv(
     let hb = format!("{}                                 Loisirs", tab);
 
     let font = doc
-        .add_external_font(File::open("./assets/fonts/Helvetica-Bold.ttf").unwrap())
+        .add_external_font(File::open("assets/fonts/Helvetica-Bold.ttf").unwrap())
         .unwrap();
     let font2 = doc
         .add_external_font(File::open("assets/fonts/Helvetica.ttf").unwrap())

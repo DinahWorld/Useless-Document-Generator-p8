@@ -29,13 +29,13 @@ pub fn attestation(user: &Rc<RefCell<User>>, adress: &Adress, hour: &gtk::Entry,
     let rules = "          En application du décret no 2020-1310 du 29 octobre 2020 prescrivant les mesures générales nécessaires";
     let rules2 = "                                pour faire face à l’épidémie de COVID-19 dans le cadre de l’état d’urgence sanitaire";
     let font = doc
-        .add_external_font(File::open("./assets/fonts/Helvetica-Bold.ttf").unwrap())
+        .add_external_font(File::open("assets/fonts/Helvetica-Bold.ttf").unwrap())
         .unwrap();
     let font2 = doc
-        .add_external_font(File::open("./assets/fonts/Helvetica-Italic.ttf").unwrap())
+        .add_external_font(File::open("assets/fonts/Helvetica-Italic.ttf").unwrap())
         .unwrap();
     let font3 = doc
-        .add_external_font(File::open("./assets/fonts/Helvetica.ttf").unwrap())
+        .add_external_font(File::open("assets/fonts/Helvetica.ttf").unwrap())
         .unwrap();
     current_layer.use_text(
         "ATTESTATION DE DÉPLACEMENT DÉROGATOIRE",
