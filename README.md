@@ -13,7 +13,6 @@ Tâches Secondaire:
 
 - [✓] Générateur d'attestation de déplacement
 - [✓] Générateur de lettre (Fournisseur Internet)
-- [ ] Générateur de fermeture de compte bancaire
 
 Bonus :
 
