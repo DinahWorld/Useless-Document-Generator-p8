@@ -12,7 +12,6 @@ pub struct Letter {
     tel: gtk::Entry,
     adress: Adress,
     email: gtk::Entry,
-    other: gtk::Entry,
 }
 
 impl Letter {
