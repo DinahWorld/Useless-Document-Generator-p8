@@ -29,7 +29,6 @@ impl Letter {
             tel: builder.get_object("tel").unwrap(),
             adress: Adress::build(builder.clone()),
             email: builder.get_object("email").unwrap(),
-            other: builder.get_object("other").unwrap(),
         };
     }
 }
