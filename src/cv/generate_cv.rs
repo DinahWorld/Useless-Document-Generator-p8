@@ -1,11 +1,11 @@
 use crate::cv;
-
-use cv::Adress;
-use cv::User;
-use {printpdf::*, std::cell::RefCell, std::fs::File, std::io::BufWriter, std::rc::Rc};
+use {
+    cv::Adress, cv::User, printpdf::*, std::cell::RefCell, std::fs::File, std::io::BufWriter,
+    std::rc::Rc,
+};
 
 pub fn cv(
-    photo : Option<std::path::PathBuf>,
+    photo: Option<std::path::PathBuf>,
     user: &Rc<RefCell<User>>,
     adress: &Adress,
     stack_work: &Rc<RefCell<Vec<(String, String, String, String)>>>,
@@ -44,12 +44,21 @@ pub fn cv(
         Some(path) => {
             let photo = path.display().to_string();
             let mut image_file = File::open(photo).unwrap();
-            let image = Image::try_from(image::jpeg::JpegDecoder::new(&mut image_file).unwrap()).unwrap();
-            image.add_to_layer(current_layer.clone(), Some(Mm(170.0)), Some(Mm(250.0)), None, Some(0.5), Some(0.5), None);
+            let image =
+                Image::try_from(image::jpeg::JpegDecoder::new(&mut image_file).unwrap()).unwrap();
+            image.add_to_layer(
+                current_layer.clone(),
+                Some(Mm(170.0)),
+                Some(Mm(250.0)),
+                None,
+                Some(0.5),
+                Some(0.5),
+                None,
+            );
         }
-        None => (), 
+        None => (),
     }
-
+    //On initialise la zone de texte
     current_layer.begin_text_section();
 
     current_layer.set_font(&font2, 14);
@@ -63,9 +72,12 @@ pub fn cv(
     current_layer.write_text("Adresse                      ", &font2);
     current_layer.write_text(adress.0, &font2);
     current_layer.add_line_break();
-    current_layer.write_text(tab, &font2);
-    current_layer.write_text(adress.1, &font2);
-    current_layer.add_line_break();
+    //Le complément d'adresse est souvent optionel, on l'ignore si l'utilisateur n'en indique pas
+    if adress.1 != "" {
+        current_layer.write_text(tab, &font2);
+        current_layer.write_text(adress.1, &font2);
+        current_layer.add_line_break();
+    }
     current_layer.write_text(tab, &font2);
     current_layer.write_text(adress.2, &font2);
     current_layer.add_line_break();
@@ -79,6 +91,7 @@ pub fn cv(
     current_layer.write_text(xp, &font);
     current_layer.add_line_break();
     current_layer.add_line_break();
+    //On dépile la pile qui contient les expériences de travail de l'utilisateur
     for work in stack_work.borrow_mut().iter() {
         current_layer.write_text("Entreprise                   ", &font2);
         current_layer.write_text(work.1.clone(), &font2);
@@ -97,6 +110,7 @@ pub fn cv(
     current_layer.write_text(ed, &font);
     current_layer.add_line_break();
     current_layer.add_line_break();
+    //On dépile la pile qui contient les études de l'utilisateur
     for school in stack_school.borrow_mut().iter() {
         current_layer.write_text("Etablissement              ", &font2);
         current_layer.write_text(school.1.clone(), &font2);
@@ -106,9 +120,12 @@ pub fn cv(
         current_layer.add_line_break();
         current_layer.write_text("Durée                           ", &font2);
         current_layer.write_text(school.0.clone(), &font2);
-        current_layer.add_line_break();
-        current_layer.write_text("Descripion                    ", &font2);
-        current_layer.write_text(school.3.clone(), &font2);
+        //Une description pour les études ?
+        if school.3 != "" {
+            current_layer.add_line_break();
+            current_layer.write_text("Descripion                    ", &font2);
+            current_layer.write_text(school.3.clone(), &font2);
+        }
         current_layer.add_line_break();
         current_layer.add_line_break();
     }
