@@ -1,10 +1,10 @@
-use {printpdf::*, std::cell::RefCell, std::fs::File, std::io::BufWriter, std::rc::Rc};
 extern crate gtk;
 use crate::cv;
 use crate::resiliation;
-use cv::User;
-use gtk::prelude::*;
-use resiliation::Letter;
+use {
+    cv::User, gtk::prelude::*, printpdf::*, resiliation::Letter, std::cell::RefCell, std::fs::File,
+    std::io::BufWriter, std::rc::Rc,
+};
 
 pub fn letter(user: &Rc<RefCell<User>>, letter: &Letter, box_internet: usize) {
     let (doc, page1, layer1) =
@@ -14,12 +14,10 @@ pub fn letter(user: &Rc<RefCell<User>>, letter: &Letter, box_internet: usize) {
     let user = user.borrow_mut();
     let adress = letter.adress.to_string();
     let email = letter.email.get_text().to_string();
-    //let box_internet = letter.internet_box.get_text().to_string();
     let tel = letter.tel.get_text().to_string();
     let suscribe_nb = letter.suscribe_nb.get_text().to_string();
 
     let name = format!("{} {}", &user.firstname, &user.lastname);
-    //let boxx = format!("Lettre de Résiliation {}.pdf",box_internet);
     let boxx = format!("Lettre de Résiliation.pdf");
     let font = doc
         .add_external_font(File::open("assets/fonts/Helvetica.ttf").unwrap())
@@ -132,6 +130,9 @@ pub fn letter(user: &Rc<RefCell<User>>, letter: &Letter, box_internet: usize) {
     current_layer.write_text("Dans cette attente, je vous prie d'agréer, Madame, Monsieur, l'expression de mes salutations",&font);
     current_layer.add_line_break();
     current_layer.write_text("distinguées", &font);
+    current_layer.add_line_break();
+    current_layer.add_line_break();
+    current_layer.add_line_break();
     current_layer.add_line_break();
     current_layer.add_line_break();
     current_layer.write_text(name, &font);

@@ -2,12 +2,10 @@ extern crate gtk;
 use crate::attestation;
 use crate::cv;
 use crate::resiliation;
-use cv::User;
-use gtk::prelude::*;
-use resiliation::generate_letter as Generate;
-use resiliation::Letter;
-use std::cell::RefCell;
-use std::rc::Rc;
+use {
+    attestation::deplacement as Attestation, cv::User, gtk::prelude::*,
+    resiliation::generate_letter as Generate, resiliation::Letter, std::cell::RefCell, std::rc::Rc,
+};
 
 macro_rules! clone {
     (@param _) => ( _ );
@@ -34,11 +32,9 @@ pub fn create_letter(user: &Rc<RefCell<User>>) {
     let letter = Letter::build(builder.clone());
     let validate: gtk::Button = builder.get_object("validate").unwrap();
 
-    validate.connect_clicked(
-        clone!(letter,user => move |_| {
-            Generate::letter(&user,&letter,attestation::deplacement::true_or_false(&letter.internet_box));
-        }),
-    );
+    validate.connect_clicked(clone!(letter,user => move |_| {
+        Generate::letter(&user,&letter,Attestation::true_or_false(&letter.internet_box));
+    }));
 
     window.show_all();
 
