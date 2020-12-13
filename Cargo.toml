@@ -9,6 +9,7 @@ edition = "2018"
 [dependencies]
 printpdf = "0.3.2"
 chrono = "0.4"
+anyhow = "1.0.35"
 
 [dependencies.gtk]
 version = "0.9.0"
