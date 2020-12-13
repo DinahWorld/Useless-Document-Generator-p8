@@ -4,8 +4,7 @@ pub mod cv;
 pub mod resiliation;
 use {
     attestation::deplacement as Attestation, cv::cv as Cv, cv::Gender::Femme as F,
-    cv::Gender::Homme as H, gtk::prelude::*, resiliation::letter as Letter, std::cell::RefCell,
-    std::rc::Rc,
+    cv::Gender::Homme as H, gtk::prelude::*, resiliation::letter as Letter, std::rc::Rc,
 };
 
 macro_rules! clone {
@@ -34,7 +33,7 @@ pub fn menu(new_user: cv::User) {
     let attestation: gtk::Button = builder.get_object("Attestation").unwrap();
     let letter: gtk::Button = builder.get_object("Letter").unwrap();
 
-    let user: Rc<RefCell<cv::User>> = Rc::new(RefCell::new(new_user));
+    let user: Rc<cv::User> = Rc::new(new_user);
 
     window.connect_delete_event(|_, _| {
         gtk::main_quit();
@@ -60,7 +59,7 @@ pub fn menu(new_user: cv::User) {
     gtk::main();
 }
 
-fn user() {
+fn launch() {
     let glade_src = include_str!("glade/user.glade");
     let builder = gtk::Builder::from_string(glade_src);
 
@@ -79,12 +78,14 @@ fn user() {
     });
 
     validate_button.connect_clicked(clone!(window => move |_| {
-        let mut gender = F;
-        if homme.get_active() {
-            gender = H;
-        }
+        let gender = if !homme.get_active() { H } else { F };
 
-        let new_user = cv::User::new_user(gender,lastname.clone(),firstname.clone(),birthday.clone(),born_city.clone());
+        let new_user = cv::User::new_user(gender,
+            lastname.get_text().to_string(),
+            firstname.get_text().to_string(),
+            birthday.get_text().to_string(),
+            born_city.get_text().to_string(),
+        );
         window.hide();
         menu(new_user);
         window.show();
@@ -100,5 +101,5 @@ fn main() {
         println!("Failed to initialize GTK.");
         return;
     }
-    user();
+    launch();
 }

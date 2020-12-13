@@ -555,7 +555,7 @@
               <object class="GtkLabel">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="label" translatable="yes">Photo (Optionnel en .JPG)</property>
+                <property name="label" translatable="yes">Photo (Optionnel en PNG)</property>
               </object>
               <packing>
                 <property name="expand">False</property>

@@ -1,17 +1,17 @@
 extern crate gtk;
 use crate::cv;
 use crate::resiliation;
+use anyhow::Result;
 use {
-    cv::User, gtk::prelude::*, printpdf::*, resiliation::Letter, std::cell::RefCell, std::fs::File,
-    std::io::BufWriter, std::rc::Rc,
+    cv::User, gtk::prelude::*, printpdf::*, resiliation::Letter, std::fs::File, std::io::BufWriter,
+    std::rc::Rc,
 };
 
-pub fn letter(user: &Rc<RefCell<User>>, letter: &Letter, box_internet: usize) {
+pub fn letter(user: &Rc<User>, letter: &Letter, box_internet: usize) -> Result<()> {
     let (doc, page1, layer1) =
         PdfDocument::new("PDF_Document_title", Mm(210.0), Mm(297.0), "Layer 1");
     let current_layer = doc.get_page(page1).get_layer(layer1);
 
-    let user = user.borrow_mut();
     let adress = letter.adress.to_string();
     let email = letter.email.get_text().to_string();
     let tel = letter.tel.get_text().to_string();
@@ -19,9 +19,7 @@ pub fn letter(user: &Rc<RefCell<User>>, letter: &Letter, box_internet: usize) {
 
     let name = format!("{} {}", &user.firstname, &user.lastname);
     let boxx = format!("Lettre de Résiliation.pdf");
-    let font = doc
-        .add_external_font(File::open("assets/fonts/Helvetica.ttf").unwrap())
-        .unwrap();
+    let font = doc.add_external_font(File::open("assets/fonts/Helvetica.ttf")?)?;
 
     current_layer.begin_text_section();
     current_layer.set_font(&font, 12);
@@ -138,6 +136,7 @@ pub fn letter(user: &Rc<RefCell<User>>, letter: &Letter, box_internet: usize) {
     current_layer.write_text(name, &font);
     current_layer.end_text_section();
 
-    doc.save(&mut BufWriter::new(File::create(boxx).unwrap()))
-        .unwrap();
+    doc.save(&mut BufWriter::new(File::create(boxx)?))?;
+
+    return Ok(());
 }

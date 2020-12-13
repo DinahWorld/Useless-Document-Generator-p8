@@ -1,8 +1,7 @@
 use crate::cv;
 extern crate gtk;
-use {cv::generate_cv as GenerateCV, cv::User, gtk::prelude::*, std::cell::RefCell, std::rc::Rc};
+use {cv::generate_cv as GenerateCV, cv::User, gtk::prelude::*, std::rc::Rc};
 
-//https://gtk-rs.org/docs-src/tutorial/closures
 macro_rules! clone {
     (@param _) => ( _ );
     (@param $x:ident) => ( $x );
@@ -19,7 +18,7 @@ macro_rules! clone {
         }
     );
 }
-pub fn create_cv(user: &Rc<RefCell<User>>) {
+pub fn create_cv(user: &Rc<User>) {
     let glade_src = include_str!("../glade/cv.glade");
     let builder = gtk::Builder::from_string(glade_src);
     let window: gtk::Window = builder.get_object("CV").unwrap();
@@ -30,6 +29,8 @@ pub fn create_cv(user: &Rc<RefCell<User>>) {
 
     let photo: gtk::FileChooserButton = builder.get_object("photo").unwrap();
     let validate: gtk::Button = builder.get_object("validate").unwrap();
+
+    let generated: gtk::Label = builder.get_object("generated").unwrap();
 
     add_stack.work.connect_clicked(clone!(cv,stack => move |_| {
         let work_string = cv.work.to_string();
@@ -62,14 +63,18 @@ pub fn create_cv(user: &Rc<RefCell<User>>) {
         }));
 
     validate.connect_clicked(clone!(cv,user,stack => move |_| {
-        GenerateCV::cv(
+        if GenerateCV::cv(
             photo.get_filename(),
             &user,
             &cv.adress,
             &stack.work,
             &stack.school,
             &stack.skill,
-            &stack.hobbie);
+            &stack.hobbie).is_ok(){
+                generated.set_text("Votre document a été généré 👌");
+            }else{
+                generated.set_text("Il y a eu un soucis 😱\nAvez-vous bien mis un fichier jpg ?\n(si vous avez mis une photo)");
+            }
     }));
 
     window.show_all();

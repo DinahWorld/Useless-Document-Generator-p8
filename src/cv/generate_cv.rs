@@ -1,4 +1,5 @@
 use crate::cv;
+use anyhow::Result;
 use {
     cv::Adress, cv::User, printpdf::*, std::cell::RefCell, std::fs::File, std::io::BufWriter,
     std::rc::Rc,
@@ -6,20 +7,19 @@ use {
 
 pub fn cv(
     photo: Option<std::path::PathBuf>,
-    user: &Rc<RefCell<User>>,
+    user: &Rc<User>,
     adress: &Adress,
     stack_work: &Rc<RefCell<Vec<(String, String, String, String)>>>,
     stack_school: &Rc<RefCell<Vec<(String, String, String, String)>>>,
     stack_skill: &Rc<RefCell<Vec<(String, String)>>>,
     stack_hobbie: &Rc<RefCell<Vec<String>>>,
-) {
+) -> Result<()> {
     let (doc, page1, layer1) =
         PdfDocument::new("PDF_Document_title", Mm(210.0), Mm(297.0), "Layer 1");
     let current_layer = doc.get_page(page1).get_layer(layer1);
 
     let adress = adress.to_string();
 
-    let user = user.borrow_mut();
     let name = format!("{} {}", &user.firstname, &user.lastname);
 
     let tab = "                                   ";
@@ -29,12 +29,8 @@ pub fn cv(
     let sk = format!("{}                           Compétences", tab);
     let hb = format!("{}                                 Loisirs", tab);
 
-    let font = doc
-        .add_external_font(File::open("assets/fonts/Helvetica-Bold.ttf").unwrap())
-        .unwrap();
-    let font2 = doc
-        .add_external_font(File::open("assets/fonts/Helvetica.ttf").unwrap())
-        .unwrap();
+    let font = doc.add_external_font(File::open("assets/fonts/Helvetica-Bold.ttf")?)?;
+    let font2 = doc.add_external_font(File::open("assets/fonts/Helvetica.ttf")?)?;
 
     current_layer.use_text(name, 16, Mm(10.0), Mm(280.0), &font);
     current_layer.add_line_break();
@@ -43,9 +39,8 @@ pub fn cv(
     match photo {
         Some(path) => {
             let photo = path.display().to_string();
-            let mut image_file = File::open(photo).unwrap();
-            let image =
-                Image::try_from(image::jpeg::JpegDecoder::new(&mut image_file).unwrap()).unwrap();
+            let mut image_file = File::open(photo)?;
+            let image = Image::try_from(image::jpeg::JpegDecoder::new(&mut image_file)?)?;
             image.add_to_layer(
                 current_layer.clone(),
                 Some(Mm(170.0)),
@@ -151,6 +146,6 @@ pub fn cv(
 
     current_layer.end_text_section();
 
-    doc.save(&mut BufWriter::new(File::create("CV.pdf").unwrap()))
-        .unwrap();
+    doc.save(&mut BufWriter::new(File::create("CV.pdf")?))?;
+    return Ok(());
 }

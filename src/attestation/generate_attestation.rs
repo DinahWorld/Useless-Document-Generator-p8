@@ -2,19 +2,19 @@ use crate::attestation;
 use crate::cv;
 
 extern crate gtk;
+use anyhow::Result;
 use attestation::Choice;
 use chrono::{Datelike, Timelike, Utc};
 use cv::User;
 use gtk::prelude::*;
-use {printpdf::*, std::cell::RefCell, std::fs::File, std::io::BufWriter, std::rc::Rc};
+use {printpdf::*, std::fs::File, std::io::BufWriter, std::rc::Rc};
 
-pub fn generate_attestation(user: &Rc<RefCell<User>>, choix: &Choice, choice: usize) {
+pub fn generate_attestation(user: &Rc<User>, choix: &Choice, choice: usize) -> Result<()> {
     let (doc, page1, layer1) =
         PdfDocument::new("PDF_Document_title", Mm(210.0), Mm(297.0), "Layer 1");
     let current_layer = doc.get_page(page1).get_layer(layer1);
     let now = Utc::now();
 
-    let user = user.borrow_mut();
     let adress = choix.adress.to_string();
 
     let name = format!("{} {}", &user.firstname, &user.lastname);
@@ -30,15 +30,9 @@ pub fn generate_attestation(user: &Rc<RefCell<User>>, choix: &Choice, choice: us
 
     let rules = "          En application du décret no 2020-1310 du 29 octobre 2020 prescrivant les mesures générales nécessaires";
     let rules2 = "                                pour faire face à l’épidémie de COVID-19 dans le cadre de l’état d’urgence sanitaire";
-    let font = doc
-        .add_external_font(File::open("./assets/fonts/Helvetica-Bold.ttf").unwrap())
-        .unwrap();
-    let font2 = doc
-        .add_external_font(File::open("./assets/fonts/Helvetica-Italic.ttf").unwrap())
-        .unwrap();
-    let font3 = doc
-        .add_external_font(File::open("./assets/fonts/Helvetica.ttf").unwrap())
-        .unwrap();
+    let font = doc.add_external_font(File::open("./assets/fonts/Helvetica-Bold.ttf")?)?;
+    let font2 = doc.add_external_font(File::open("./assets/fonts/Helvetica-Italic.ttf")?)?;
+    let font3 = doc.add_external_font(File::open("./assets/fonts/Helvetica.ttf")?)?;
     current_layer.use_text(
         "ATTESTATION DE DÉPLACEMENT DÉROGATOIRE",
         14,
@@ -244,8 +238,8 @@ pub fn generate_attestation(user: &Rc<RefCell<User>>, choix: &Choice, choice: us
     current_layer.add_line_break();
     current_layer.end_text_section();
 
-    doc.save(&mut BufWriter::new(
-        File::create("Attestation de déplacement.pdf").unwrap(),
-    ))
-    .unwrap();
+    doc.save(&mut BufWriter::new(File::create(
+        "Attestation de déplacement.pdf",
+    )?))?;
+    return Ok(());
 }

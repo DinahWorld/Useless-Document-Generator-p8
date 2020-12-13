@@ -5,7 +5,6 @@ extern crate gtk;
 use attestation::generate_attestation as Generate;
 use attestation::Choice;
 use gtk::prelude::*;
-use std::cell::RefCell;
 use std::rc::Rc;
 
 macro_rules! clone {
@@ -33,19 +32,24 @@ pub fn true_or_false(vec: &Vec<gtk::CheckButton>) -> usize {
     return 0;
 }
 
-pub fn create_attestation(user: &Rc<RefCell<cv::User>>) {
+pub fn create_attestation(user: &Rc<cv::User>) {
     let glade_src = include_str!("../glade/attestation_deplacement.glade");
     let builder = gtk::Builder::from_string(glade_src);
     let window: gtk::Window = builder.get_object("Attestation").unwrap();
 
     let choice = Choice::build(builder.clone());
     let validate: gtk::Button = builder.get_object("validate").unwrap();
+    let generated: gtk::Label = builder.get_object("generated").unwrap();
 
     validate.connect_clicked(clone!(user,choice => move |_| {
-        Generate::generate_attestation(
+        if Generate::generate_attestation(
             &user,
             &choice,
-            true_or_false(&choice.choice));
+            true_or_false(&choice.choice)).is_ok(){
+                generated.set_text("Votre document a été généré 👌");
+            }else{
+                generated.set_text("Il y a eu un soucis 😱");
+            }
     }));
 
     window.show_all();
@@ -57,28 +61,3 @@ pub fn create_attestation(user: &Rc<RefCell<cv::User>>) {
 
     gtk::main();
 }
-
-/*
-#[cfg(test)]
-mod tests {
-
-    use super::*;
-    use crate::party;
-    use party::Instruction as I;
-    use party::Orientation as O;
-    use party::Robot as R;
-    use party::Terrain as T;
-    #[test]
-    fn test_file() {
-        let mut rb = vec![R {
-            id: 1,
-            x: 1,
-            y: 2,
-            orientation: O::North,
-            instruction: vec![&I::F, &I::L],
-        }];
-
-        assert_eq!(file(&mut rb), T { x: 5, y: 5 });
-    }
-}
-*/
