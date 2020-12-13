@@ -4,6 +4,23 @@ pub mod cv;
 pub mod generate_cv;
 use std::cell::RefCell;
 use std::rc::Rc;
+#[macro_export]
+macro_rules! clone {
+    (@param _) => ( _ );
+    (@param $x:ident) => ( $x );
+    ($($n:ident),+ => move || $body:expr) => (
+        {
+            $( let $n = $n.clone(); )+
+            move || $body
+        }
+    );
+    ($($n:ident),+ => move |$($p:tt),+| $body:expr) => (
+        {
+            $( let $n = $n.clone(); )+
+            move |$(clone!(@param $p),)+| $body
+        }
+    );
+}
 
 #[derive(Clone)]
 pub enum Gender {
@@ -74,17 +91,17 @@ pub struct Addstack {
 impl User {
     pub fn new_user(
         gender: Gender,
-        lastname: gtk::Entry,
-        firstname: gtk::Entry,
-        birthday: gtk::Entry,
-        born_city: gtk::Entry,
+        lastname: String,
+        firstname: String,
+        birthday: String,
+        born_city: String,
     ) -> User {
         return User {
             gender: gender,
-            lastname: lastname.get_text().to_string(),
-            firstname: firstname.get_text().to_string(),
-            birthday: birthday.get_text().to_string(),
-            born_city: born_city.get_text().to_string(),
+            lastname: lastname,
+            firstname: firstname,
+            birthday: birthday,
+            born_city: born_city,
         };
     }
 }
