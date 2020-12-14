@@ -78,7 +78,7 @@ fn launch() {
     });
 
     validate_button.connect_clicked(clone!(window => move |_| {
-        let gender = if !homme.get_active() { H } else { F };
+        let gender = if homme.get_active() { H } else { F };
 
         let new_user = cv::User::new_user(gender,
             lastname.get_text().to_string(),
