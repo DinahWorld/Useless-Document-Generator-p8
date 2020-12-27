@@ -20,6 +20,12 @@ Bonus :
 - [ ] Faire un Meme Generator
 
 
+Crates utilisé : 
+    printpdf = "0.3.2"
+    chrono = "0.4"
+    anyhow = "1.0.35"
+
+
 
 
 Dinath
