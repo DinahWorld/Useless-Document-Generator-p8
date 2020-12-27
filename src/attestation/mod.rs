@@ -13,6 +13,7 @@ pub struct Choice {
 }
 
 impl Choice {
+    ///Va "builder.get_object("x").unwrap()," chaque variable de la structure afin de recuperer chaque élément de l'interface  
     fn build(builder: gtk::Builder) -> Choice {
         return Choice {
             adress: Adress::build(builder.clone()),

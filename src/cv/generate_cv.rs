@@ -5,6 +5,7 @@ use {
     std::rc::Rc,
 };
 
+///Genere un cv
 pub fn cv(
     photo: Option<std::path::PathBuf>,
     user: &Rc<User>,
@@ -17,7 +18,7 @@ pub fn cv(
     let (doc, page1, layer1) =
         PdfDocument::new("PDF_Document_title", Mm(210.0), Mm(297.0), "Layer 1");
     let current_layer = doc.get_page(page1).get_layer(layer1);
-
+    //On recupere les informations sous forme de string
     let adress = adress.to_string();
 
     let name = format!("{} {}", &user.firstname, &user.lastname);
@@ -29,13 +30,16 @@ pub fn cv(
     let sk = format!("{}                           Compétences", tab);
     let hb = format!("{}                                 Loisirs", tab);
 
+    //On définit nos polices d'écritures
     let font = doc.add_external_font(File::open("assets/fonts/Helvetica-Bold.ttf")?)?;
     let font2 = doc.add_external_font(File::open("assets/fonts/Helvetica.ttf")?)?;
 
-    current_layer.use_text(name, 16, Mm(10.0), Mm(280.0), &font);
+    //Notre Titre
+    current_layer.use_text(name, 16.0, Mm(10.0), Mm(280.0), &font);
     current_layer.add_line_break();
-    current_layer.use_text(&user.birthday, 12, Mm(10.0), Mm(275.0), &font);
+    current_layer.use_text(&user.birthday, 12.0, Mm(10.0), Mm(275.0), &font);
 
+    //Si il y a une photo, on le situera aux coordonnée indiqué
     match photo {
         Some(path) => {
             let photo = path.display().to_string();
@@ -55,11 +59,11 @@ pub fn cv(
     }
     //On initialise la zone de texte
     current_layer.begin_text_section();
-
-    current_layer.set_font(&font2, 14);
+    //On définit nos parametres par défaut pour ce block de texte
+    current_layer.set_font(&font2, 14.0);
     current_layer.set_text_cursor(Mm(10.0), Mm(255.0));
-    current_layer.set_line_height(14);
-    current_layer.set_word_spacing(3000);
+    current_layer.set_line_height(14.0);
+    current_layer.set_word_spacing(3000.0);
 
     current_layer.write_text(inf, &font);
     current_layer.add_line_break();
@@ -115,7 +119,7 @@ pub fn cv(
         current_layer.add_line_break();
         current_layer.write_text("Durée                           ", &font2);
         current_layer.write_text(school.0.clone(), &font2);
-        //Une description pour les études ?
+        //Si l'utilisateur n'a pas mis de description, on evitera d'ecrire "description"
         if school.3 != "" {
             current_layer.add_line_break();
             current_layer.write_text("Descripion                    ", &font2);
@@ -127,6 +131,7 @@ pub fn cv(
     current_layer.write_text(sk, &font);
     current_layer.add_line_break();
     current_layer.add_line_break();
+    //On dépile la pile qui contient les compétences de l'utilisateur
     for skill in stack_skill.borrow_mut().iter() {
         current_layer.write_text("Compétences              ", &font2);
         current_layer.write_text(skill.0.clone(), &font2);
@@ -145,7 +150,8 @@ pub fn cv(
     }
 
     current_layer.end_text_section();
-
+    //Si le fichier a bien été généré, grâce à anyhow on recevra "Ok" qui indiquera à l'utilisateur
+    //si le fichier a bien été généré
     doc.save(&mut BufWriter::new(File::create("CV.pdf")?))?;
     return Ok(());
 }

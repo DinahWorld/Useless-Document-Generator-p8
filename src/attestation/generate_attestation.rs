@@ -13,8 +13,9 @@ pub fn generate_attestation(user: &Rc<User>, choix: &Choice, choice: usize) -> R
     let (doc, page1, layer1) =
         PdfDocument::new("PDF_Document_title", Mm(210.0), Mm(297.0), "Layer 1");
     let current_layer = doc.get_page(page1).get_layer(layer1);
+    //Prend l'heure de maintenant
     let now = Utc::now();
-
+    //On recupere les informations sous forme de string
     let adress = choix.adress.to_string();
 
     let name = format!("{} {}", &user.firstname, &user.lastname);
@@ -35,28 +36,29 @@ pub fn generate_attestation(user: &Rc<User>, choix: &Choice, choice: usize) -> R
     let font3 = doc.add_external_font(File::open("./assets/fonts/Helvetica.ttf")?)?;
     current_layer.use_text(
         "ATTESTATION DE DÉPLACEMENT DÉROGATOIRE",
-        14,
+        14.0,
         Mm(45.0),
         Mm(280.0),
         &font,
     );
-
+    //On définit nos parametres par défaut pour ce block de texte
     current_layer.begin_text_section();
-    current_layer.set_font(&font2, 10);
+    current_layer.set_font(&font2, 10.0);
     current_layer.set_text_cursor(Mm(10.0), Mm(270.0));
-    current_layer.set_line_height(14);
-    current_layer.set_word_spacing(3000);
+    current_layer.set_line_height(14.0);
+    current_layer.set_word_spacing(3000.0);
 
     current_layer.write_text(rules, &font2);
     current_layer.add_line_break();
     current_layer.write_text(rules2, &font2);
     current_layer.end_text_section();
 
+    //On définit nos parametres par défaut pour ce block de texte
     current_layer.begin_text_section();
-    current_layer.set_font(&font3, 11);
+    current_layer.set_font(&font3, 11.0);
     current_layer.set_text_cursor(Mm(10.0), Mm(250.0));
-    current_layer.set_line_height(14);
-    current_layer.set_word_spacing(3000);
+    current_layer.set_line_height(14.0);
+    current_layer.set_word_spacing(3000.0);
 
     match &user.gender {
         cv::Gender::Homme => {
@@ -81,11 +83,12 @@ pub fn generate_attestation(user: &Rc<User>, choix: &Choice, choice: usize) -> R
     current_layer.add_line_break();
     current_layer.end_text_section();
 
+    //On définit nos parametres par défaut pour ce block de texte
     current_layer.begin_text_section();
-    current_layer.set_font(&font3, 11);
+    current_layer.set_font(&font3, 11.0);
     current_layer.set_text_cursor(Mm(10.0), Mm(230.0));
-    current_layer.set_line_height(11);
-    current_layer.set_word_spacing(3000);
+    current_layer.set_line_height(11.0);
+    current_layer.set_word_spacing(3000.0);
 
     current_layer.write_text("certifie que mon déplacement est lié au motif suivant(cocher la case) autorisé par le décret no 2020-1310 du 29",&font3);
     current_layer.add_line_break();
@@ -95,11 +98,12 @@ pub fn generate_attestation(user: &Rc<User>, choix: &Choice, choice: usize) -> R
     current_layer.add_line_break();
     current_layer.end_text_section();
 
+    //On définit nos parametres par défaut pour ce block de texte
     current_layer.begin_text_section();
-    current_layer.set_font(&font3, 9);
+    current_layer.set_font(&font3, 9.0);
     current_layer.set_text_cursor(Mm(10.0), Mm(215.0));
-    current_layer.set_line_height(10);
-    current_layer.set_word_spacing(3000);
+    current_layer.set_line_height(10.0);
+    current_layer.set_word_spacing(3000.0);
 
     current_layer.write_text("Note : Les personnes souhaitant bénéficier de l’une de ces exceptions doivent se munir s’il y a lieu, lors de leurs déplacements",&font3);
     current_layer.add_line_break();
@@ -109,11 +113,13 @@ pub fn generate_attestation(user: &Rc<User>, choix: &Choice, choice: usize) -> R
     current_layer.add_line_break();
     current_layer.end_text_section();
 
+    //On définit nos parametres par défaut pour ce block de texte
     current_layer.begin_text_section();
-    current_layer.set_font(&font3, 14);
+    current_layer.set_font(&font3, 14.0);
     current_layer.set_text_cursor(Mm(10.0), Mm(180.0));
-    current_layer.set_line_height(15);
-    current_layer.set_word_spacing(3000);
+    current_layer.set_line_height(15.0);
+    current_layer.set_word_spacing(3000.0);
+    //En fonction du choix choisi par l'utilisateur on aura un texte différent
     match choice {
         1 => {
             current_layer.write_text("Déplacements entre le domicile et le lieu d’exercice de l’activité professionnelle ou un",&font3);
@@ -214,22 +220,23 @@ pub fn generate_attestation(user: &Rc<User>, choix: &Choice, choice: usize) -> R
         _ => (),
     }
     current_layer.end_text_section();
-
+    //On définit nos parametres par défaut pour ce block de texte
     current_layer.begin_text_section();
-    current_layer.set_font(&font3, 14);
+    current_layer.set_font(&font3, 14.0);
     current_layer.set_text_cursor(Mm(120.0), Mm(60.0));
-    current_layer.set_line_height(20);
-    current_layer.set_word_spacing(3000);
+    current_layer.set_line_height(20.0);
+    current_layer.set_word_spacing(3000.0);
     current_layer.write_text("Date et heure de sortie : ", &font3);
     current_layer.write_text(choix.hour.get_text().to_string(), &font3);
 
     current_layer.end_text_section();
 
+    //On définit nos parametres par défaut pour ce block de texte
     current_layer.begin_text_section();
-    current_layer.set_font(&font3, 11);
+    current_layer.set_font(&font3, 11.0);
     current_layer.set_text_cursor(Mm(10.0), Mm(20.0));
-    current_layer.set_line_height(14);
-    current_layer.set_word_spacing(3000);
+    current_layer.set_line_height(14.0);
+    current_layer.set_word_spacing(3000.0);
 
     current_layer.write_text("Fait à : ", &font3);
     current_layer.write_text(adress.3, &font3);
@@ -238,6 +245,8 @@ pub fn generate_attestation(user: &Rc<User>, choix: &Choice, choice: usize) -> R
     current_layer.add_line_break();
     current_layer.end_text_section();
 
+    //Si le fichier a bien été généré, grâce à anyhow on recevra "Ok" qui indiquera à l'utilisateur
+    //si le fichier a bien été généré
     doc.save(&mut BufWriter::new(File::create(
         "Attestation de déplacement.pdf",
     )?))?;

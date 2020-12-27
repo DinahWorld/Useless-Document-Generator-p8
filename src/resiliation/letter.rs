@@ -23,17 +23,23 @@ macro_rules! clone {
         }
     );
 }
-
+///Fonction qui permettra d'afficher la fenetre pour générer une lettre de résiliation
 pub fn create_letter(user: &Rc<User>) {
+    //On récupere notre fichier glade dans un premier temps
     let glade_src = include_str!("../glade/lettre_resiliation.glade");
     let builder = gtk::Builder::from_string(glade_src);
     let window: gtk::Window = builder.get_object("Lettre").unwrap();
-
+    //On recupere les élements de notre fichier glade
     let letter = Letter::build(builder.clone());
     let validate: gtk::Button = builder.get_object("validate").unwrap();
     let generated: gtk::Label = builder.get_object("generated").unwrap();
 
+    //Lorsque l'utilisateur aura clické sur le bouton valider, on enverra les informations
+    //de l'utilisateur à la fonction "letter" qui va générer le fichier pdf à partir des
+    //informations de l'utilisateur
     validate.connect_clicked(clone!(letter,user => move |_| {
+        //Si la fonction retourne ok, on indiquera à l'utilisateur que le fichier a bien été
+        //généré
         if Generate::letter(
             &user,
             &letter,
@@ -44,9 +50,10 @@ pub fn create_letter(user: &Rc<User>) {
             generated.set_text("Il y a eu un soucis 😱");
         }
     }));
-
+    //On affiche tout les éléments de la fênetre
     window.show_all();
-
+    //lorsque l'utilisateur appuiera sur le bouton fermer
+    //la fenetre sera détruite
     window.connect_delete_event(|_, _| {
         gtk::main_quit();
         Inhibit(false)

@@ -89,6 +89,7 @@ pub struct Addstack {
 }
 
 impl User {
+    ///Va contenir les informations de l'utilisateurs dans la structure User sous forme de string
     pub fn new_user(
         gender: Gender,
         lastname: String,
@@ -223,6 +224,7 @@ impl Hobbie {
 }
 
 impl Curriculumviter {
+    ///Va "builder.get_object("x").unwrap()," chaque variable de la structure afin de recuperer chaque élément de l'interface  
     pub fn build(builder: gtk::Builder) -> Curriculumviter {
         return Curriculumviter {
             adress: Adress::build(builder.clone()),
@@ -235,6 +237,7 @@ impl Curriculumviter {
 }
 
 impl Addstack {
+    ///Va "builder.get_object("x").unwrap()," chaque variable de la structure afin de recuperer chaque élément de l'interface  
     pub fn build(builder: gtk::Builder) -> Addstack {
         return Addstack {
             work: builder.get_object("addAdress").unwrap(),
@@ -245,6 +248,7 @@ impl Addstack {
     }
 }
 impl Stack {
+    /// Rc::new(RefCell::new(Vec::new()))
     pub fn create() -> Stack {
         return Stack {
             work: Rc::new(RefCell::new(Vec::new())),

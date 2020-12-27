@@ -15,6 +15,7 @@ pub struct Letter {
 }
 
 impl Letter {
+    ///Va "builder.get_object("x").unwrap()," chaque variable de la structure afin de recuperer chaque élément de l'interface  
     fn build(builder: gtk::Builder) -> Letter {
         return Letter {
             internet_box: vec![

@@ -1,3 +1,5 @@
+/* Fichier qui genere une lettre de résiliation en pdf */
+
 extern crate gtk;
 use crate::cv;
 use crate::resiliation;
@@ -11,7 +13,7 @@ pub fn letter(user: &Rc<User>, letter: &Letter, box_internet: usize) -> Result<(
     let (doc, page1, layer1) =
         PdfDocument::new("PDF_Document_title", Mm(210.0), Mm(297.0), "Layer 1");
     let current_layer = doc.get_page(page1).get_layer(layer1);
-
+    //On recupere les informations sous forme de string
     let adress = letter.adress.to_string();
     let email = letter.email.get_text().to_string();
     let tel = letter.tel.get_text().to_string();
@@ -19,13 +21,16 @@ pub fn letter(user: &Rc<User>, letter: &Letter, box_internet: usize) -> Result<(
 
     let name = format!("{} {}", &user.firstname, &user.lastname);
     let boxx = format!("Lettre de Résiliation.pdf");
+
+    //On choisit notre police d'écriture
     let font = doc.add_external_font(File::open("assets/fonts/Helvetica.ttf")?)?;
 
+    //On définit nos parametres par défaut pour ce block de texte
     current_layer.begin_text_section();
-    current_layer.set_font(&font, 12);
+    current_layer.set_font(&font, 12.0);
     current_layer.set_text_cursor(Mm(10.0), Mm(280.0));
-    current_layer.set_line_height(14);
-    current_layer.set_word_spacing(3000);
+    current_layer.set_line_height(14.0);
+    current_layer.set_word_spacing(3000.0);
 
     current_layer.write_text(name.clone(), &font);
     current_layer.add_line_break();
@@ -40,11 +45,12 @@ pub fn letter(user: &Rc<User>, letter: &Letter, box_internet: usize) -> Result<(
     current_layer.write_text(email, &font);
     current_layer.end_text_section();
 
+    //On définit nos parametres par défaut pour ce block de texte
     current_layer.begin_text_section();
-    current_layer.set_font(&font, 12);
+    current_layer.set_font(&font, 12.0);
     current_layer.set_text_cursor(Mm(150.0), Mm(250.0));
-    current_layer.set_line_height(14);
-    current_layer.set_word_spacing(3000);
+    current_layer.set_line_height(14.0);
+    current_layer.set_word_spacing(3000.0);
     match box_internet {
         1 => {
             current_layer.write_text("SFR - Service Résiliation", &font);
@@ -83,20 +89,22 @@ pub fn letter(user: &Rc<User>, letter: &Letter, box_internet: usize) -> Result<(
     }
     current_layer.end_text_section();
 
+    //On définit nos parametres par défaut pour ce block de texte
     current_layer.begin_text_section();
-    current_layer.set_font(&font, 14);
+    current_layer.set_font(&font, 14.0);
     current_layer.set_text_cursor(Mm(10.0), Mm(215.0));
-    current_layer.set_line_height(14);
-    current_layer.set_word_spacing(3000);
+    current_layer.set_line_height(14.0);
+    current_layer.set_word_spacing(3000.0);
 
     current_layer.write_text("Objet : Résiliation du contrat d'abonnement", &font);
     current_layer.end_text_section();
 
+    //On définit nos parametres par défaut pour ce block de texte
     current_layer.begin_text_section();
-    current_layer.set_font(&font, 12);
+    current_layer.set_font(&font, 12.0);
     current_layer.set_text_cursor(Mm(10.0), Mm(205.0));
-    current_layer.set_line_height(14);
-    current_layer.set_word_spacing(3000);
+    current_layer.set_line_height(14.0);
+    current_layer.set_word_spacing(3000.0);
 
     current_layer.write_text("Numéro de ligne téléphonique : ", &font);
     current_layer.write_text(tel, &font);
@@ -136,6 +144,8 @@ pub fn letter(user: &Rc<User>, letter: &Letter, box_internet: usize) -> Result<(
     current_layer.write_text(name, &font);
     current_layer.end_text_section();
 
+    //Si le fichier a bien été généré, grâce à anyhow on recevra "Ok" qui indiquera à l'utilisateur
+    //si le fichier a bien été généré
     doc.save(&mut BufWriter::new(File::create(boxx)?))?;
 
     return Ok(());
